@@ -5,9 +5,10 @@ const refs = {
   min: document.querySelector(`[data-value="mins"]`),
   sec: document.querySelector(`[data-value="secs"]`),
 };
+const { countdownWrapper, day, hour, min, sec } = refs;
 
 const countdown = () => {
-  const { countdownWrapper, day, hour, min, sec } = refs;
+  
   const targetTime = new Date("Oct 17, 2021").getTime();
   const currentTime = new Date().getTime();
   const interim = targetTime - currentTime;
