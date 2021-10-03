@@ -8,7 +8,6 @@ const refs = {
 const { countdownWrapper, day, hour, min, sec } = refs;
 
 const countdown = () => {
-  
   const targetTime = new Date("Oct 17, 2021").getTime();
   const currentTime = new Date().getTime();
   const interim = targetTime - currentTime;
@@ -22,10 +21,10 @@ const countdown = () => {
 
   console.log(interim);
 
-  day.textContent = days;
-  hour.textContent = hours;
-  min.textContent = mins;
-  sec.textContent = secs;
+  refs.day.textContent = days;
+  refs.hour.textContent = hours;
+  refs.min.textContent = mins;
+  refs.sec.textContent = secs;
 };
 
 setInterval(countdown, 1000);
