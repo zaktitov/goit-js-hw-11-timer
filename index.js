@@ -10,6 +10,7 @@ const { countdownWrapper, day, hour, min, sec } = refs;
 function pad(value) {
   return String(value).padStart(2, `0`);
 }
+
 const countdown = () => {
   const targetTime = new Date("Oct 17, 2021").getTime();
   const currentTime = new Date().getTime();
@@ -22,8 +23,6 @@ const countdown = () => {
   const mins = pad(Math.floor((interim % (1000 * 60 * 60)) / (1000 * 60)));
   const secs = pad(Math.floor((interim % (1000 * 60)) / 1000));
 
-  console.log(interim);
-
   refs.day.textContent = days;
   refs.hour.textContent = hours;
   refs.min.textContent = mins;
@@ -32,7 +31,3 @@ const countdown = () => {
 
 setInterval(countdown, 1000);
 
-new CountdownTimer({
-  selector: "#timer-1",
-  targetDate: new Date("Oct 17, 2021").getTime(),
-});
