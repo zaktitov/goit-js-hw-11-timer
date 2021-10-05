@@ -7,27 +7,41 @@ const refs = {
 };
 const { countdownWrapper, day, hour, min, sec } = refs;
 
-function pad(value) {
-  return String(value).padStart(2, `0`);
+class CountdownTimer {
+  constructor({ selector, targetDate }) {
+    this.selector = selector;
+    this.targetDate = targetDate;
+  }
+
+  countdown() {
+    setInterval(() => {
+      this.currentDate = new Date().getTime();
+      this.interim = this.targetDate - this.currentDate;
+
+      function pad(value) {
+        return String(value).padStart(2, `0`);
+      }
+
+      const days = pad(Math.floor(this.interim / (1000 * 60 * 60 * 24)));
+      const hours = pad(
+        Math.floor((this.interim % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      );
+      const mins = pad(
+        Math.floor((this.interim % (1000 * 60 * 60)) / (1000 * 60))
+      );
+      const secs = pad(Math.floor((this.interim % (1000 * 60)) / 1000));
+
+      refs.day.textContent = days;
+      refs.hour.textContent = hours;
+      refs.min.textContent = mins;
+      refs.sec.textContent = secs;
+    }, 1000);
+  }
 }
 
-const countdown = () => {
-  const targetTime = new Date("Oct 17, 2021").getTime();
-  const currentTime = new Date().getTime();
-  const interim = targetTime - currentTime;
+const newTimer = new CountdownTimer({
+  selector: "#timer-1",
+  targetDate: new Date("Oct 17, 2021").getTime(),
+});
 
-  const days = pad(Math.floor(interim / (1000 * 60 * 60 * 24)));
-  const hours = pad(
-    Math.floor((interim % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-  );
-  const mins = pad(Math.floor((interim % (1000 * 60 * 60)) / (1000 * 60)));
-  const secs = pad(Math.floor((interim % (1000 * 60)) / 1000));
-
-  refs.day.textContent = days;
-  refs.hour.textContent = hours;
-  refs.min.textContent = mins;
-  refs.sec.textContent = secs;
-};
-
-setInterval(countdown, 1000);
-
+console.log(newTimer.countdown());
