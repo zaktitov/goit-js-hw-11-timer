@@ -13,9 +13,7 @@ class CountdownTimer {
       "afterbegin",
       `<div class="timer" id=${this.selector}">
         <div class="field">
-          <span class="value" data-value="days"></span>
-            00
-          </span>
+          <span class="value" data-value="days">00</span>
           <span class="label">Days</span>
         </div>
 
