@@ -10,12 +10,13 @@ class CountdownTimer {
   constructor({ selector, targetDate }) {
     this.selector = selector;
     this.targetDate = targetDate;
+    this.interval = null;
   }
 
   start() {
     const timerId = document.querySelector(this.selector);
 
-    setInterval(() => {
+    this.interval = setInterval(() => {
       const currentDate = new Date().getTime();
       const time = this.targetDate - currentDate;
 
@@ -33,6 +34,10 @@ class CountdownTimer {
       timerId.querySelector(`[data-value="hours"]`).textContent = hours;
       timerId.querySelector(`[data-value="mins"]`).textContent = mins;
       timerId.querySelector(`[data-value="secs"]`).textContent = secs;
+
+      if (time < 0) {
+        clearInterval(this.interval);
+      }
     }, 1000);
   }
 
@@ -53,4 +58,4 @@ const brandNewTimer = new CountdownTimer({
   targetDate: new Date("Nov 28, 2021").getTime(),
 });
 
-brandNewTimer.start()
+brandNewTimer.start();
