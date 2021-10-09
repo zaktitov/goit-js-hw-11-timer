@@ -13,26 +13,27 @@ class CountdownTimer {
   }
 
   start() {
-    document.querySelector("div.timer").setAttribute("id", this.selector);
+    const timerId = document.querySelector(this.selector);
 
     setInterval(() => {
       const currentDate = new Date().getTime();
-      const deltaTime = this.targetDate - currentDate;
-      const time = this.getTimeComp(deltaTime);
-      updateTime(time)
+      const time = this.targetDate - currentDate;
+
+      const days = this.pad(Math.floor(time / (1000 * 60 * 60 * 24)));
+
+      const hours = this.pad(
+        Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      );
+      const mins = this.pad(
+        Math.floor((time % (1000 * 60 * 60)) / (1000 * 60))
+      );
+      const secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
+
+      timerId.querySelector(`[data-value="days"]`).textContent = days;
+      timerId.querySelector(`[data-value="hours"]`).textContent = hours;
+      timerId.querySelector(`[data-value="mins"]`).textContent = mins;
+      timerId.querySelector(`[data-value="secs"]`).textContent = secs;
     }, 1000);
-  }
-
-  getTimeComp(time) {
-    const days = this.pad(Math.floor(time / (1000 * 60 * 60 * 24)));
-
-    const hours = this.pad(
-      Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-    );
-    const mins = this.pad(Math.floor((time % (1000 * 60 * 60)) / (1000 * 60)));
-    const secs = this.pad(Math.floor((time % (1000 * 60)) / 1000));
-
-    return { days, hours, mins, secs };
   }
 
   pad(value) {
@@ -45,11 +46,11 @@ const newTimer = new CountdownTimer({
   targetDate: new Date("Oct 11, 2021").getTime(),
 });
 
-function updateTime({ days, hours, mins, secs }) {
-  refs.day.textContent = `${days}`;
-  refs.hour.textContent = `${hours}`;
-  refs.min.textContent = `${mins}`;
-  refs.sec.textContent = `${secs}`;
-}
+newTimer.start();
 
-newTimer.start()
+const brandNewTimer = new CountdownTimer({
+  selector: "#timer-2",
+  targetDate: new Date("Nov 28, 2021").getTime(),
+});
+
+brandNewTimer.start()
